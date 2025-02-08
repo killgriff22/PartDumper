@@ -1,0 +1,9 @@
+{
+  "name": "PartDumper",
+  "desc": "A tool to view the properties of parts.",
+  "tags": [
+    "Debug",
+    "ScriptMod"
+  ],
+  "publishedID": 3423150072
+}
