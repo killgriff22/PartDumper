@@ -1,3 +1,4 @@
+import re
 infile = open("in.txt", "r")
 badchars = [
     " ",
@@ -41,6 +42,9 @@ def single(data):
     for i, x in enumerate(data):
         print(f"{i}: {x}")
         if not x:
+            empty.append(i)
+        elif "[Message:     Unity]" in x:
+            input(data)
             empty.append(i)
     for i,x in enumerate(empty):
         data.pop(x+i)
