@@ -22,13 +22,13 @@ local function catbool(text, bool)
         return text .. 'false'
     end
 end
-local function dumpPart()
-    local part = GetTargetedPart()
+local function dumpPart(part)
+    local intrest_behavior = nil
+    local part = GetTargetedPart() or part
     if not part then
         return
     end
     print("--..--..--")
-    print('Dumping part: ' .. part.AssetName)
     print('    AssetName: ' .. part.AssetName)
     print('    Category: ' .. part.Category)
     print('    AssetGUID: ' .. part.AssetGUID)
@@ -49,12 +49,14 @@ local function dumpPart()
     print('        Strength: ' .. part.Properties.Strength)
     print("    Behaviors:")
     for behavior in part.Behaviours do
+        intrest_behavior = behavior
         print("    Behavior: " .. behavior.Name)
         print(catbool("        IsTweakable:", behavior.IsTweakable))
         for channel in behavior.Channels do
             print("        Channel: " .. channel.Label)
         end
     end
+    print("--..--..--!")
 end
 
 local function CreateWindow(l, w, closefunc)
@@ -102,6 +104,10 @@ local function populatemainwin()
     dumpbutton = CreateButton(0, buttonheight, buttonwidth, buttonheight, 'Dump Part (tab)', window, dumpPart)
     partlabel = CreateLabel(0, 0, buttonwidth, buttonheight, 'Part: None', window)
 end
+parts = {}
+for part in Parts.Instances do
+    parts[part.ID] = part
+end
 populatemainwin()
 function Update()
     local part = GetTargetedPart()
@@ -112,7 +118,9 @@ function Update()
     end
     if Input.GetKey('tab') and not keypressed then
         keypressed = true
-        dumpPart()
+        for _part in Parts.Instances do
+            dumpPart(_part)
+        end
     elseif not Input.GetKey('tab') then
         keypressed= false
     end
