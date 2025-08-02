@@ -104,10 +104,7 @@ local function populatemainwin()
     dumpbutton = CreateButton(0, buttonheight, buttonwidth, buttonheight, 'Dump Part (tab)', window, dumpPart)
     partlabel = CreateLabel(0, 0, buttonwidth, buttonheight, 'Part: None', window)
 end
-parts = {}
-for part in Parts.Instances do
-    parts[part.ID] = part
-end
+
 populatemainwin()
 function Update()
     local part = GetTargetedPart()
